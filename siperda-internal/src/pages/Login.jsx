@@ -1,34 +1,44 @@
 import { FiLock, FiUser, FiArrowRight } from "react-icons/fi";
+
 import { useNavigate, Link } from "react-router-dom";
+
 import { useState } from "react";
+
 import { loginUser } from "../services/authService";
 
 function Login() {
   const navigate = useNavigate();
 
   const [nip, setNip] = useState("");
+
   const [password, setPassword] = useState("");
+
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     setLoading(true);
 
     try {
-      const response = await loginUser({ nip, password });
+      const response = await loginUser({
+        nip,
+        password,
+      });
 
-      localStorage.setItem("token", response.token);
+      // simpan user
       localStorage.setItem("user", JSON.stringify(response.user));
 
+      // redirect role
       if (response.user.role === "admin") {
         navigate("/dashboard-admin");
       } else if (response.user.role === "pimpinan") {
         navigate("/dashboard-pimpinan");
       } else {
-        navigate("/dashboard-pelapor");
+        navigate("/");
       }
-    } catch {
-      alert("NIP atau Password salah");
+    } catch (error) {
+      alert(error.response?.data?.message || "Login gagal");
     } finally {
       setLoading(false);
     }
@@ -37,12 +47,14 @@ function Login() {
   return (
     <div
       className="min-h-screen flex items-center justify-center bg-cover bg-center relative px-4 py-10"
-      style={{ backgroundImage: "url('/bg-pekanbaru.jpg')" }}
+      style={{
+        backgroundImage: "url('/bg-pekanbaru.jpg')",
+      }}
     >
       {/* overlay */}
       <div className="absolute inset-0 bg-black/60"></div>
 
-      {/* login card */}
+      {/* card */}
       <form
         onSubmit={handleLogin}
         className="relative z-10 w-full max-w-md bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl px-8 py-7 shadow-2xl"
@@ -75,6 +87,7 @@ function Login() {
 
         {/* input */}
         <div className="mt-6 space-y-4">
+          {/* NIP */}
           <div className="relative">
             <FiUser className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 text-xl" />
 
@@ -88,6 +101,7 @@ function Login() {
             />
           </div>
 
+          {/* PASSWORD */}
           <div className="relative">
             <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 text-xl" />
 
@@ -120,6 +134,7 @@ function Login() {
           className="w-full h-14 mt-6 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-lg font-semibold flex items-center justify-center gap-2 hover:scale-[1.01] transition"
         >
           {loading ? "Loading..." : "Login"}
+
           <FiArrowRight />
         </button>
 

@@ -15,18 +15,33 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
+
             'name' => 'required',
+
             'nip' => 'required|unique:users',
+
+            'unit_kerja' => 'required',
+
+            'role' => 'required',
+
             'email' => 'required|email|unique:users',
+
             'password' => 'required|min:3'
         ]);
 
         $user = User::create([
+
             'name' => $request->name,
+
             'nip' => $request->nip,
+
+            'unit_kerja' => $request->unit_kerja,
+
+            'role' => $request->role,
+
             'email' => $request->email,
+
             'password' => bcrypt($request->password),
-            'role' => 'pelapor'
         ]);
 
         return response()->json([

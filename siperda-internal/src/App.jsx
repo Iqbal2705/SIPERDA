@@ -30,6 +30,10 @@ const DashboardPimpinan = lazy(
   () => import("./pages/dashboardpimpinan/DashboardPimpinan"),
 );
 
+const FormLaporan = lazy(() => import("./pages/FormLaporan"));
+
+const RiwayatLaporan = lazy(() => import("./pages/RiwayatLaporan"));
+
 /* 404 */
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -69,6 +73,10 @@ function App() {
           <Route element={<DashboardPimpinanLayout />}>
             <Route path="/dashboard-pimpinan" element={<DashboardPimpinan />} />
           </Route>
+
+          <Route path="/lapor" element={<FormLaporan />} />
+
+          <Route path="/riwayat" element={<RiwayatLaporan />} />
 
           {/* 404 */}
           <Route path="*" element={<NotFound />} />
