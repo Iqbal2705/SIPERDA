@@ -75,12 +75,72 @@ class LaporanController extends Controller
 
     // RIWAYAT BERDASARKAN NIP
     public function riwayat($nip)
-    {
-        $laporan = Laporan::where(
+{
+    return Laporan::where('nip_pelapor', $nip)
+        ->orWhere('nip_terlapor', $nip)
+        ->orderBy('created_at', 'desc')
+        ->get([
+            'id',
             'nip_pelapor',
-            $nip
-        )->latest()->get();
+            'nama_pelapor',
+            'nip_terlapor',
+            'nama_terlapor',
+            'jenis_pelanggaran',
+            'tanggal_pelanggaran',
+            'uraian',
+            'status',
 
-        return response()->json($laporan);
+            'hasil_pemeriksaan',
+            'catatan_admin',
+            'petugas_pemeriksa',
+            'diproses_oleh',
+            'tanggal_proses',
+
+            'created_at',
+            'updated_at'
+        ]);
+}
+
+    public function laporanMasuk()
+    {
+        return Laporan::whereIn(
+            'status',
+            ['Menunggu', 'Diproses']
+        )
+        ->latest()
+        ->get();
+    }
+
+    public function show($id)
+    {
+        return Laporan::findOrFail($id);
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $laporan = Laporan::findOrFail($id);
+
+        $laporan->status = $request->status;
+
+        $laporan->hasil_pemeriksaan =
+            $request->hasil_pemeriksaan;
+
+        $laporan->catatan_admin =
+            $request->catatan_admin;
+
+        $laporan->petugas_pemeriksa =
+            $request->petugas_pemeriksa;
+
+        $laporan->diproses_oleh =
+            $request->diproses_oleh;
+
+        $laporan->tanggal_proses =
+            now();
+
+        $laporan->save();
+
+        return response()->json([
+            'message' => 'Laporan berhasil diperbarui'
+        ]);
     }
 }

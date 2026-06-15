@@ -41,7 +41,7 @@ function RiwayatLaporan() {
       <div className="absolute bottom-0 right-0 w-72 h-72 bg-blue-600/20 blur-3xl rounded-full"></div>
 
       <div className="relative z-10 max-w-6xl mx-auto">
-        {/* header */}
+        {/* HEADER */}
         <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl p-8 mb-8">
           <h1 className="text-4xl font-bold text-white mb-6">
             Riwayat Laporan
@@ -65,7 +65,7 @@ function RiwayatLaporan() {
           </div>
         </div>
 
-        {/* data */}
+        {/* DATA */}
         <div className="space-y-6">
           {loading && (
             <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 text-center text-white text-lg">
@@ -85,7 +85,7 @@ function RiwayatLaporan() {
                 key={item.id}
                 className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl hover:scale-[1.01] transition"
               >
-                {/* top */}
+                {/* TOP */}
                 <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-6">
                   <div>
                     <h1 className="text-2xl font-bold text-cyan-300">
@@ -97,12 +97,23 @@ function RiwayatLaporan() {
                     </p>
                   </div>
 
-                  <div className="bg-yellow-400/20 text-yellow-300 px-5 py-2 rounded-full font-semibold border border-yellow-300/20">
+                  <div
+                    className={`px-5 py-2 rounded-full font-semibold border
+                    ${
+                      item.status === "Selesai"
+                        ? "bg-green-500/20 text-green-300 border-green-400/30"
+                        : item.status === "Ditolak"
+                          ? "bg-red-500/20 text-red-300 border-red-400/30"
+                          : item.status === "Diproses"
+                            ? "bg-purple-500/20 text-purple-300 border-purple-400/30"
+                            : "bg-yellow-500/20 text-yellow-300 border-yellow-400/30"
+                    }`}
+                  >
                     {item.status}
                   </div>
                 </div>
 
-                {/* data */}
+                {/* DATA PELAPOR */}
                 <div className="grid md:grid-cols-2 gap-5 mb-6">
                   <div className="bg-white/5 rounded-2xl p-4 border border-white/10">
                     <p className="text-gray-400 text-sm mb-1">Pelapor</p>
@@ -121,12 +132,66 @@ function RiwayatLaporan() {
                   </div>
                 </div>
 
-                {/* uraian */}
-                <div className="bg-white/5 rounded-2xl p-5 border border-white/10">
+                {/* URAIAN */}
+                <div className="bg-white/5 rounded-2xl p-5 border border-white/10 mb-5">
                   <p className="text-gray-400 text-sm mb-2">Uraian</p>
 
                   <p className="leading-relaxed text-gray-200">{item.uraian}</p>
                 </div>
+
+                {/* HASIL TINDAK LANJUT ADMIN */}
+                {(item.catatan_admin ||
+                  item.hasil_pemeriksaan ||
+                  item.petugas_pemeriksa ||
+                  item.tanggal_proses) && (
+                  <div className="bg-cyan-500/10 rounded-2xl p-5 border border-cyan-500/20">
+                    <h2 className="text-xl font-bold text-cyan-300 mb-5">
+                      Hasil Tindak Lanjut Admin
+                    </h2>
+
+                    <div className="grid md:grid-cols-2 gap-5">
+                      <div className="bg-white/5 rounded-2xl p-4 border border-white/10">
+                        <p className="text-gray-400 text-sm mb-2">
+                          Catatan Admin
+                        </p>
+
+                        <p className="text-white">
+                          {item.catatan_admin || "-"}
+                        </p>
+                      </div>
+
+                      <div className="bg-white/5 rounded-2xl p-4 border border-white/10">
+                        <p className="text-gray-400 text-sm mb-2">
+                          Hasil Pemeriksaan
+                        </p>
+
+                        <p className="text-white">
+                          {item.hasil_pemeriksaan || "-"}
+                        </p>
+                      </div>
+
+                      <div className="bg-white/5 rounded-2xl p-4 border border-white/10">
+                        <p className="text-gray-400 text-sm mb-2">
+                          Petugas Pemeriksa
+                        </p>
+
+                        <p className="text-white">
+                          {item.petugas_pemeriksa || "-"}
+                        </p>
+                      </div>
+
+                      <div className="bg-white/5 rounded-2xl p-4 border border-white/10">
+                        <p className="text-gray-400 text-sm mb-2">
+                          Tanggal Proses
+                        </p>
+
+                        <p className="text-white">
+                          {item.tanggal_proses || "-"}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
         </div>

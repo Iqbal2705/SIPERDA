@@ -3,12 +3,12 @@ import SidebarAdmin from "../components/SidebarAdmin";
 
 function DashboardAdminLayout() {
   return (
-    <div className="flex bg-[#f5f7fb]">
+    <div className="flex bg-slate-100 min-h-screen">
       <SidebarAdmin />
 
-      <div className="flex-1 p-8">
+      <main className="flex-1 p-8 overflow-auto">
         <Outlet />
-      </div>
+      </main>
     </div>
   );
 }

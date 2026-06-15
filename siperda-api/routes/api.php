@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\LaporanController;
-
+use App\Http\Controllers\Api\DashboardController;
 
 Route::post('/register', [AuthController::class, 'register']);
 
@@ -26,4 +26,26 @@ Route::post(
 Route::get(
     '/riwayat/{nip}',
     [LaporanController::class, 'riwayat']
+);
+
+Route::get('/dashboard-admin', [DashboardController::class, 'admin']);
+
+Route::get(
+    '/laporan-masuk',
+    [LaporanController::class, 'laporanMasuk']
+);
+
+Route::get(
+    '/laporan/{id}',
+    [LaporanController::class, 'show']
+);
+
+Route::put(
+    '/laporan/{id}',
+    [LaporanController::class, 'updateStatus']
+);
+
+Route::get(
+    '/dashboard-admin/riwayat',
+    [DashboardController::class, 'riwayat']
 );
