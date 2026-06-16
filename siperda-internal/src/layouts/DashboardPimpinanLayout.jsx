@@ -3,12 +3,12 @@ import SidebarPimpinan from "../components/SidebarPimpinan";
 
 function DashboardPimpinanLayout() {
   return (
-    <div className="flex bg-[#f5f7fb]">
+    <div className="flex min-h-screen bg-slate-100">
       <SidebarPimpinan />
 
-      <div className="flex-1 p-8">
+      <main className="flex-1 p-8 overflow-auto">
         <Outlet />
-      </div>
+      </main>
     </div>
   );
 }

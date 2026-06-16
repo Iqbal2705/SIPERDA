@@ -20,6 +20,12 @@ function DetailLaporan() {
 
   const [catatan, setCatatan] = useState("");
 
+  const [hasilPemeriksaan, setHasilPemeriksaan] = useState("");
+
+  const [petugasPemeriksa, setPetugasPemeriksa] = useState("");
+
+  const [diprosesOleh, setDiprosesOleh] = useState("");
+
   useEffect(() => {
     getDetail();
   }, []);
@@ -32,9 +38,15 @@ function DetailLaporan() {
 
       setLaporan(response.data);
 
-      setStatus(response.data.status);
+      setStatus(response.data.status || "");
 
       setCatatan(response.data.catatan_admin || "");
+
+      setHasilPemeriksaan(response.data.hasil_pemeriksaan || "");
+
+      setPetugasPemeriksa(response.data.petugas_pemeriksa || "");
+
+      setDiprosesOleh(response.data.diproses_oleh || "");
     } catch (error) {
       console.log(error);
     }
@@ -44,7 +56,14 @@ function DetailLaporan() {
     try {
       await axios.put(`http://127.0.0.1:8000/api/laporan/${id}`, {
         status,
+
+        hasil_pemeriksaan: hasilPemeriksaan,
+
         catatan_admin: catatan,
+
+        petugas_pemeriksa: petugasPemeriksa,
+
+        diproses_oleh: diprosesOleh,
       });
 
       alert("Laporan berhasil diperbarui");
@@ -97,7 +116,6 @@ function DetailLaporan() {
 
       {/* DATA */}
       <div className="grid grid-cols-2 gap-6">
-        {/* PELAPOR */}
         <div className="bg-white rounded-3xl border p-6 shadow-sm">
           <div className="flex items-center gap-3 mb-6">
             <FiUser className="text-blue-600 text-2xl" />
@@ -120,7 +138,6 @@ function DetailLaporan() {
           </div>
         </div>
 
-        {/* TERLAPOR */}
         <div className="bg-white rounded-3xl border p-6 shadow-sm">
           <div className="flex items-center gap-3 mb-6">
             <FiUsers className="text-red-600 text-2xl" />
@@ -187,13 +204,7 @@ function DetailLaporan() {
           <img
             src={`http://127.0.0.1:8000/storage/${laporan.bukti}`}
             alt="Bukti"
-            className="
-              w-full
-              max-h-[600px]
-              object-contain
-              rounded-2xl
-              border
-            "
+            className="w-full max-h-[600px] object-contain rounded-2xl border"
           />
         </div>
       )}
@@ -212,13 +223,7 @@ function DetailLaporan() {
           <select
             value={status}
             onChange={(e) => setStatus(e.target.value)}
-            className="
-              w-full
-              mt-2
-              border
-              rounded-2xl
-              p-4
-            "
+            className="w-full mt-2 border rounded-2xl p-4"
           >
             <option value="Menunggu">Menunggu</option>
 
@@ -231,21 +236,49 @@ function DetailLaporan() {
         </div>
 
         <div className="mt-6">
-          <label className="font-medium">Catatan Pemeriksaan</label>
+          <label className="font-medium">Catatan Admin</label>
 
           <textarea
-            rows="6"
+            rows="4"
             value={catatan}
             onChange={(e) => setCatatan(e.target.value)}
-            className="
-              w-full
-              mt-2
-              border
-              rounded-2xl
-              p-4
-            "
-            placeholder="Tuliskan hasil pemeriksaan..."
+            className="w-full mt-2 border rounded-2xl p-4"
           />
+        </div>
+
+        <div className="mt-6">
+          <label className="font-medium">Hasil Pemeriksaan</label>
+
+          <textarea
+            rows="5"
+            value={hasilPemeriksaan}
+            onChange={(e) => setHasilPemeriksaan(e.target.value)}
+            className="w-full mt-2 border rounded-2xl p-4"
+          />
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6 mt-6">
+          <div>
+            <label className="font-medium">Petugas Pemeriksa</label>
+
+            <input
+              type="text"
+              value={petugasPemeriksa}
+              onChange={(e) => setPetugasPemeriksa(e.target.value)}
+              className="w-full mt-2 border rounded-2xl p-4"
+            />
+          </div>
+
+          <div>
+            <label className="font-medium">Diproses Oleh</label>
+
+            <input
+              type="text"
+              value={diprosesOleh}
+              onChange={(e) => setDiprosesOleh(e.target.value)}
+              className="w-full mt-2 border rounded-2xl p-4"
+            />
+          </div>
         </div>
 
         <div className="mt-8 flex justify-end">

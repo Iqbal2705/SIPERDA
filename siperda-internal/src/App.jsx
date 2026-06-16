@@ -22,29 +22,43 @@ const RiwayatLaporan = lazy(() => import("./pages/RiwayatLaporan"));
 
 /* ADMIN */
 const DashboardAdmin = lazy(
-  () => import("./pages/dashboardadmin/DashboardAdmin")
+  () => import("./pages/dashboardadmin/DashboardAdmin"),
 );
 
-const LaporanMasuk = lazy(
-  () => import("./pages/dashboardadmin/LaporanMasuk")
-);
+const LaporanMasuk = lazy(() => import("./pages/dashboardadmin/LaporanMasuk"));
 
 const DetailLaporan = lazy(
-  () => import("./pages/dashboardadmin/DetailLaporan")
+  () => import("./pages/dashboardadmin/DetailLaporan"),
 );
 
 const RiwayatLaporanAdmin = lazy(
-  () => import("./pages/dashboardadmin/RiwayatLaporan")
+  () => import("./pages/dashboardadmin/RiwayatLaporan"),
 );
 
-const Pengaturan = lazy(
-  () => import("./pages/dashboardadmin/Pengaturan")
-);
+const Pengaturan = lazy(() => import("./pages/dashboardadmin/Pengaturan"));
 
 /* PIMPINAN */
 const DashboardPimpinan = lazy(
-  () => import("./pages/dashboardpimpinan/DashboardPimpinan")
+  () => import("./pages/dashboardpimpinan/DashboardPimpinan"),
 );
+
+const RingkasanLaporan = lazy(
+  () => import("./pages/dashboardpimpinan/RingkasanLaporan"),
+);
+
+const DetailRingkasanLaporan = lazy(
+  () => import("./pages/dashboardpimpinan/DetailRingkasanLaporan"),
+);
+
+const RiwayatPimpinan = lazy(
+  () => import("./pages/dashboardpimpinan/RiwayatPimpinan"),
+);
+
+const LaporanUnitKerja = lazy(
+  () => import("./pages/dashboardpimpinan/LaporanUnitKerja"),
+);
+
+const ExportData = lazy(() => import("./pages/dashboardpimpinan/ExportData"));
 
 /* 404 */
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -55,9 +69,7 @@ function App() {
       <Suspense
         fallback={
           <div className="h-screen flex items-center justify-center bg-slate-100">
-            <h1 className="text-2xl font-semibold text-blue-700">
-              Loading...
-            </h1>
+            <h1 className="text-2xl font-semibold text-blue-700">Loading...</h1>
           </div>
         }
       >
@@ -106,9 +118,31 @@ function App() {
 
           {/* PIMPINAN */}
           <Route element={<DashboardPimpinanLayout />}>
+            <Route path="/dashboard-pimpinan" element={<DashboardPimpinan />} />
+
             <Route
-              path="/dashboard-pimpinan"
-              element={<DashboardPimpinan />}
+              path="/dashboard-pimpinan/ringkasan"
+              element={<RingkasanLaporan />}
+            />
+
+            <Route
+              path="/dashboard-pimpinan/detail/:id"
+              element={<DetailRingkasanLaporan />}
+            />
+
+            <Route
+              path="/dashboard-pimpinan/riwayat"
+              element={<RiwayatPimpinan />}
+            />
+
+            <Route
+              path="/dashboard-pimpinan/unit-kerja"
+              element={<LaporanUnitKerja />}
+            />
+
+            <Route
+              path="/dashboard-pimpinan/export"
+              element={<ExportData />}
             />
           </Route>
 

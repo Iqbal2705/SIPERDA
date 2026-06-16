@@ -49,3 +49,28 @@ Route::get(
     '/dashboard-admin/riwayat',
     [DashboardController::class, 'riwayat']
 );
+
+Route::get(
+    '/dashboard-pimpinan',
+    [DashboardController::class, 'pimpinan']
+);
+
+Route::get(
+    '/dashboard-pimpinan/ringkasan',
+    [DashboardController::class, 'ringkasanLaporan']
+);
+
+Route::get(
+    '/dashboard-pimpinan/riwayat',
+    [DashboardController::class, 'riwayatPimpinan']
+);
+
+Route::get(
+    '/dashboard-pimpinan/unit-kerja',
+    [DashboardController::class, 'laporanUnitKerja']
+);
+
+Route::get(
+    '/dashboard-pimpinan/export',
+    [DashboardController::class, 'exportData']
+);
